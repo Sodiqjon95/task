@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:task/auth/otp.dart';
 import 'package:task/utils/constants.dart';
 import 'package:task/utils/icon.dart';
 import 'package:task/widgets/phone_input_component.dart';
@@ -64,9 +63,15 @@ class _PhoneAuthState extends State<PhoneAuth> {
                   debugPrint("nomerrrrrr>>>>> ${countryCode + phone}");
                   await FirebaseAuth.instance.verifyPhoneNumber(
                     phoneNumber: countryCode + phone,
-                    verificationCompleted: (PhoneAuthCredential credential) {},
-                    verificationFailed: (FirebaseAuthException e) {},
+                    verificationCompleted: (PhoneAuthCredential credential) {
+                      debugPrint("completed>>>>> ${countryCode + phone}");
+                    },
+                    verificationFailed: (FirebaseAuthException e) {
+                      debugPrint("ERROR>>>>> $e");
+                    },
                     codeSent: (String verificationId, int? resendToken) {
+                      debugPrint("code sent >>>>> ${countryCode + phone}");
+
                       PhoneAuth.verify = verificationId;
                       Navigator.pushNamed(context, RouteNames.otp);
                     },
@@ -93,12 +98,9 @@ class _PhoneAuthState extends State<PhoneAuth> {
                 ),
               ),
             ),
-
           ],
         ),
-
       ),
-
     );
   }
 }
