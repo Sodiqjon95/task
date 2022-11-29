@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:task/auth/otp.dart';
-import 'package:task/utils/constants.dart';
-import 'package:task/utils/icon.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task/cubits/user/user_cubit.dart';
+import 'package:task/utils/icons/icon.dart';
 import 'package:task/widgets/phone_input_component.dart';
 
 class PhoneAuth extends StatefulWidget {
@@ -62,27 +61,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                 ),
                 onPressed: () async {
                   debugPrint("nomerrrrrr>>>>> ${countryCode + phone}");
-                  await FirebaseAuth.instance.verifyPhoneNumber(
-                    phoneNumber: countryCode + phone,
-                    verificationCompleted: (PhoneAuthCredential credential) {},
-                    verificationFailed: (FirebaseAuthException e) {},
-                    codeSent: (String verificationId, int? resendToken) {
-                      PhoneAuth.verify = verificationId;
-                      Navigator.pushNamed(context, RouteNames.otp);
-                    },
-                    codeAutoRetrievalTimeout: (String verificationId) {},
-                  );
-
-                  // await FirebaseAuth.instance.verifyPhoneNumber(
-                  //   phoneNumber: countryCode + phone,
-                  //   verificationCompleted: (PhoneAuthCredential credential) {},
-                  //   verificationFailed: (FirebaseAuthException e) {},
-                  //   codeSent: (String verificationId, int? resendToken) {
-                  //     PhoneAuth.verify = verificationId;
-                  //     Navigator.pushNamed(context, 'otp');
-                  //   },
-                  //   codeAutoRetrievalTimeout: (String verificationId) {},
-                  // );
+                  await context.read<UserCubit>().singInWithPhoneNumber(number: phone, context: context);
                 },
                 child: const Text(
                   "Register",

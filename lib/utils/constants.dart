@@ -5,3 +5,6 @@ class RouteNames {
   static const String noInternet = '/no_internet';
   static const String offline = '/offline';
 }
+const String stripePublishableKey = "";
+const String defaultImage = "https://www.vecteezy.com/png/1200107-book";
+

@@ -24,6 +24,55 @@ class MyColors {
   static const Color C_E9E9EFF= Color(0xFFE9E9EF);
   static const Color C_BACCDC= Color(0xFFBACCDC);
   static const Color C_363636 = Color(0xFF363636);
+
+  static const Color primary = Color(0xFF2972FE);
+  static const Color error = Color(0xFFDA1414);
+
+  static const Color actionPrimaryDefault = Color(0xFF2972FE);
+  static Color actionPrimaryHover =
+  Color.alphaBlend(Color(0xFF2972FE), Color(0xFFFFFFFF).withOpacity(0.2));
+  static Color actionPrimaryActive =
+  Color.alphaBlend(Color(0xFF2972FE), Color(0xFF000000).withOpacity(0.2));
+  static const Color actionPrimaryDisabled = Color(0xFF93B8FE);
+  static const Color actionPrimaryInverted = Color(0xFFFFFFFF);
+
+  // Action Secondary
+  static const Color actionSecondaryDefault = Color(0xFFFFB800);
+  static Color actionSecondaryHover =
+  Color.alphaBlend(Color(0xFFFFB800), Color(0xFFFFFFFF).withOpacity(0.2));
+  static Color actionSecondaryActive =
+  Color.alphaBlend(Color(0xFFFFB800), Color(0xFF000000).withOpacity(0.2));
+  static const Color actionSecondaryDisabled = Color(0xFFFFB800);
+  static const Color actionSecondaryInverted = Color(0xFFFFFFFF);
+
+
+
+  static const Color neutralBlack = Color(0xFF09101D);
+  static const Color neutral1 = Color(0xFF2C3A4B);
+  static const Color neutral2 = Color(0xFF394452);
+  static const Color neutral3 = Color(0xFF545D69);
+  static const Color neutral4 = Color(0xFF6D7580);
+  static const Color neutral5 = Color(0xFF858C94);
+  static const Color neutral6 = Color(0xFFA5ABB3);
+  static const Color neutral7 = Color(0xFFDADEE3);
+  static const Color neutral8 = Color(0xFFEBEEF2);
+  static const Color neutral9 = Color(0xFFF4F6F9);
+  static const Color neutralWhite = Color(0xFFFFFFFF);
+
+  // Accent
+  static const Color accent1 = Color(0xFFECB2F2);
+  static const Color accent2 = Color(0xFF2D6A6A);
+  static const Color accent3 = Color(0xFFE9AD8C);
+  static const Color accent4 = Color(0xFF221874);
+  static const Color accent5 = Color(0xFF221874);
+  static const Color accent6 = Color(0xFFE1604D);
+
+  static const otherGradient1 = [Color(0xFF2972FE), Color(0xFF6499FF)];
+  static const otherGradient2 = [Color(0xFFFFB800), Color(0xFFFFDA7B)];
+  static List<Color> otherGradient3 = [
+    Color(0xFFFF1843).withOpacity(0.9),
+    Color(0xFFFF5E7C).withOpacity(0.9)
+  ];
 }
 
 class Palette {

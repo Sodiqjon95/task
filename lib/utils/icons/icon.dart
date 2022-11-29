@@ -7,6 +7,8 @@ class MyIcons {
 
   static const String appLogo = 'assets/images/uzb.png';
   static const noInternet = "assets/lottie/no_internet.json";
+  static const messageFailed = "assets/images/message_failed.png";
+
 
 
   static const boardingImage1 = "assets/images/img.png";
@@ -26,6 +28,8 @@ class MyIcons {
   static const vacancies = "assets/images/vacancies.png";
   static const inVacancies = "assets/images/in_vacancy.png";
   static const profile = "assets/images/profile.png";
+  static const String uzCard = 'assets/images/uzcard.png';
+
 
   static const String mapLogo = "assets/images/google_maps_logo.png";
 
@@ -48,6 +52,9 @@ class MyIcons {
   static const search = "assets/svg/search.svg";
   static const time = "assets/svg/time.svg";
   static const status = "assets/svg/status.svg";
+  static const String eventNote = "assets/svg/notification/event_note.svg";
+
+
 
   //.jpg files
 
