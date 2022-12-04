@@ -3,7 +3,14 @@ import 'package:task/utils/color.dart';
 import 'package:task/utils/style.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSize {
-  const CustomAppBar({Key? key, this.onBackTap, this.title, this.centerTitle, this.helperIcon, this.onTapHelper}) : super(key: key);
+  const CustomAppBar({
+    Key? key,
+    this.onBackTap,
+    this.title,
+    this.centerTitle,
+    this.helperIcon,
+    this.onTapHelper,
+  }) : super(key: key);
 
   final VoidCallback? onBackTap;
   final VoidCallback? onTapHelper;
@@ -14,12 +21,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-
       backgroundColor: Palette.kToDark.shade200,
       elevation: 0,
       centerTitle: centerTitle ?? false,
-      title: Text(title ?? "",
-          style: MyTextStyle.sfBold800.copyWith(fontSize: 20,color: MyColors.textColor)),
+      title: Text(title ?? "", style: MyTextStyle.sfBold800.copyWith(fontSize: 20, color: MyColors.textColor)),
       leading: onBackTap != null
           ? IconButton(
               onPressed: onBackTap,
@@ -29,10 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
               ),
             )
           : null,
-      actions: [
-        helperIcon == true ?
-        IconButton(onPressed: onTapHelper, icon: const Icon(Icons.assignment_late)):const SizedBox()
-      ],
+      actions: [helperIcon == true ? IconButton(onPressed: onTapHelper, icon: const Icon(Icons.assignment_late)) : const SizedBox()],
     );
   }
 

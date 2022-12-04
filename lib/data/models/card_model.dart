@@ -33,12 +33,17 @@ class CardModel {
 
   @JsonKey(defaultValue: "", name: "user_id")
   String userId;
+
+  @JsonKey(defaultValue: "", name: "expiry_data")
+  String expiryData;
+
   CardModel({
     required this.userId,
     required this.cardId,
     required this.cardNum,
     required this.cardSalary,
-    required this.holderName
+    required this.holderName,
+    required this.expiryData,
   });
   factory CardModel.fromJson(Map<String, dynamic> json) =>
       _$CardModelFromJson(json);

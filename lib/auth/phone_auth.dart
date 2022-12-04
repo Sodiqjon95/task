@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/cubits/user/user_cubit.dart';
 import 'package:task/utils/icons/icon.dart';
 import 'package:task/widgets/phone_input_component.dart';
+import 'package:task/widgets/register_button.dart';
 
 class PhoneAuth extends StatefulWidget {
   const PhoneAuth({Key? key}) : super(key: key);
@@ -31,53 +32,25 @@ class _PhoneAuthState extends State<PhoneAuth> {
             PhoneInputComponent(
               phoneText: (String value) {
                 phone = value;
-                print(phone);
+                debugPrint(phone);
               },
               initialValue: '',
               caption: 'Telephone number',
             ),
+            const SizedBox(height: 50),
             SizedBox(
-              height: 50,
-            ),
-            SizedBox(
-              child: TextButton(
-                style: ButtonStyle(
-                  elevation: MaterialStateProperty.all(10),
-                  minimumSize: MaterialStateProperty.all(
-                    const Size(250, 50),
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      side: const BorderSide(
-                        color: Colors.white,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  backgroundColor: MaterialStateProperty.all(
-                    Colors.blue,
-                  ),
-                ),
-                onPressed: () async {
-                  debugPrint("nomerrrrrr>>>>> ${countryCode + phone}");
+              child:
+              RegisterButton(
+                onTap: ()async{
+                  debugPrint("nomeri>>>>> ${countryCode + phone}");
                   await context.read<UserCubit>().singInWithPhoneNumber(number: phone, context: context);
                 },
-                child: const Text(
-                  "Register",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                  ),
-                ),
-              ),
+                title: "Register",
+              )
             ),
-
           ],
         ),
-
       ),
-
     );
   }
 }

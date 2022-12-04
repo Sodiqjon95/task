@@ -1,97 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task/utils/color.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
+import 'package:task/cubits/cards/cards_cubit.dart';
+import 'package:task/ui/card/add_my_card.dart';
+import 'package:task/ui/card/widgets/custom_app_bar.dart';
+import 'package:task/ui/card/widgets/my_card_item.dart';
 import 'package:task/utils/icons/icon.dart';
-import 'package:task/widgets/global_button.dart';
-import 'package:task/widgets/success_booking_dialog.dart';
-import 'package:task/widgets/text_field.dart';
 
-import 'widgets/card_expire_date_companent.dart';
-import 'widgets/card_item.dart';
-
-class BookingPaymentScreen extends StatefulWidget {
-  const BookingPaymentScreen({Key? key}) : super(key: key);
+class MyCards extends StatefulWidget {
+  const MyCards({Key? key}) : super(key: key);
 
   @override
-  State<BookingPaymentScreen> createState() => _BookingPaymentScreenState();
+  State<MyCards> createState() => _MyCardsState();
 }
 
-class _BookingPaymentScreenState extends State<BookingPaymentScreen> {
-  final TextEditingController fullNameController = TextEditingController();
-  String expiryDate = '';
-  String cardNumber = '';
+class _MyCardsState extends State<MyCards> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.white,
-      appBar: AppBar(
-        title: const Text("Payment"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.add_circle_outline_sharp,
-            ),
-          ),
-        ],
-      ),
-      // SingleIconAppBar(
-      //   onTap: () {},
-      //   title: 'Payment',
-      //   svgIcon: ContentIcons.addCircleOutline,
-      // ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 24.h),
-        child: Column(
-          children: [
-            CardItem(
-              cardHolderName: fullNameController.text,
-              expireDate: expiryDate,
-              cardNumber: (cardNum) {
-                cardNumber = cardNum;
-                setState(() {});
-              },
-            ),
-            SizedBox(height: 24.h),
-            MyTextField(
-              controller: fullNameController,
-              onChanged: (v) {
-                setState(() {});
-              },
-              text: 'Full Name',
-            ),
-            SizedBox(height: 24.h),
-            CardExpireDateComponent(
-              cardText: (expireDate) {
-                expiryDate = expireDate;
-                setState(() {});
-              },
-              initialValue: '',
-            ),
-            SizedBox(height: 100.h),
-            GlobalButton(
-              buttonText: 'Pay Now',
-              isActive: expiryDate.length == 5 && cardNumber.length == 19 && fullNameController.text != '',
-              onTap: () {
-                showDialog(
-                  // barrierDismissible: false,
-                  context: context,
-                  builder: (context) => Dialog(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
-                    backgroundColor: Theme.of(context).backgroundColor,
-                    insetPadding: EdgeInsets.symmetric(horizontal: 54.w),
-                    child: SuccessBookingItem(
-                      iconPath: MyIcons.messageFailed,
-                      onPressed: () {},
-                      message: 'Please make sure that your internet connection is active and stable, then press “Try Again”',
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+      appBar: const CustomAppBar(title: "My Cards"),
+      body: BlocBuilder<CardsCubit, CardsState>(
+        builder: (context, state) {
+          var st = state.status;
+          if (st == FormzStatus.submissionInProgress) {
+            print("status >>>> $st");
+            return const Center(child: CircularProgressIndicator());
+          } else if (st == FormzStatus.submissionSuccess) {
+            var cards = state.cards;
+            debugPrint(cards.toString());
+            return cards.isNotEmpty
+                ? ListView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+                    children: [
+                      ...List.generate(cards.length, (index) {
+                        debugPrint("card >>>> $cards.toString()");
+                        return MyCardItem(
+                          card: cards[index],
+                        );
+                      })
+                    ],
+                  )
+                : Center(child: IconButton(onPressed: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BookingPaymentScreen(),
+                  ));
+            },icon: Icon(Icons.add),));
+          } else if (st == FormzStatus.submissionFailure) {
+            print("status error >>>> $st");
+
+            return Center(child: Text(state.errorText));
+          }
+          return const Center(child: Text("error"));
+        },
       ),
     );
   }

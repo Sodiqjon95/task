@@ -1,10 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:task/data/models/card_model.dart';
 
 class CardsRepository {
   final FirebaseFirestore _fireStore;
 
   CardsRepository({required FirebaseFirestore fireStore}) : _fireStore = fireStore;
+
+  Future<void> updateCardSalaryById({required String uid,required double price}) async{
+    try{
+      await _fireStore.collection("cards").doc(uid).update({"card_salary": price});
+    }catch(e){
+
+    }
+  }
 
   Future<void> postCard({
     required Map<String, dynamic> cardJson,
@@ -32,16 +41,19 @@ class CardsRepository {
       );
 
   Stream<List<CardModel>> getCardByUserId(
-          {required String userId}) =>
-      _fireStore
-          .collection('cards')
-          .where("user_id", isEqualTo: userId)
-          .snapshots()
-          .map(
-            (snapshot) => snapshot.docs
-                .map((doc) => CardModel.fromJson(doc.data()))
-                .toList(),
-          );
+          {required String userId}) {
+    debugPrint("getCarId ichi >>> $userId");
+   return  _fireStore
+        .collection('cards')
+        .where("user_id", isEqualTo: userId)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+          .map((doc) => CardModel.fromJson(doc.data()))
+          .toList(),
+    );
+  }
+
 
   Future<void> deleteCard({
     required String docId,

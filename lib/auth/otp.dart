@@ -5,7 +5,7 @@ import 'package:pinput/pinput.dart';
 import 'package:task/cubits/user/user_cubit.dart';
 import 'package:task/utils/color.dart';
 import 'package:task/utils/style.dart';
-import 'package:task/widgets/my_custom_button.dart';
+import 'package:task/widgets/register_button.dart';
 
 class SMSCodeScreen extends StatefulWidget {
   const SMSCodeScreen({Key? key}) : super(key: key);
@@ -42,7 +42,14 @@ class _SMSCodeScreenState extends State<SMSCodeScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Text("Enter your 6 digit here", textAlign: TextAlign.center, style: MyTextStyle.sfProRegular.copyWith(fontSize: 20, color: MyColors.black.withOpacity(0.5))),
+              child: Text(
+                "Enter your 6 digit here",
+                textAlign: TextAlign.center,
+                style: MyTextStyle.sfProRegular.copyWith(
+                  fontSize: 20,
+                  color: MyColors.black.withOpacity(0.5),
+                ),
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -58,14 +65,13 @@ class _SMSCodeScreenState extends State<SMSCodeScreen> {
                 )),
             const SizedBox(height: 50),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: MyCustomButton(
-                buttonText: "Login",
-                onTap: () async {
-                  await context.read<UserCubit>().otpVerification(code: code, context: context);
-                },
-              ),
-            ),
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: RegisterButton(
+                  title: "Login",
+                  onTap: () async {
+                    await context.read<UserCubit>().otpVerification(code: code, context: context);
+                  },
+                )),
             const SizedBox(height: 20),
           ]),
         ));

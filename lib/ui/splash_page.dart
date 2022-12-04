@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     widget.isValid = StorageRepository.getBool("isValid");
     Future.delayed(const Duration(seconds: 2)).then((value) {
       print("bool  ${widget.isValid}");
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => widget.isValid ? const MyHomePage() : const PhoneAuth(),

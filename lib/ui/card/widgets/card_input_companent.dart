@@ -70,7 +70,7 @@ class _CardInputComponentState extends State<CardInputComponent> {
         });
       },
       style: MyTextStyle.sfProBold
-          .copyWith(fontSize: 25.sp, color: MyColors.black),
+          .copyWith(fontSize: 25.sp, color: MyColors.white),
       decoration: InputDecoration(
         hintStyle: MyTextStyle.sfProBold
             .copyWith(fontSize: 27.sp, color: MyColors.primaryColor.withOpacity(0.5)),

@@ -26,13 +26,12 @@ class UserCubit extends Cubit<UserState> {
         ));
 
   final HelperRepository helperRepository;
-  // late StreamSubscription _subscriptionAll;
+  late StreamSubscription _subscriptionAll;
 
   Future<void> singInWithPhoneNumber({required String number, required BuildContext context}) async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await helperRepository.singInWithPhoneNumber(number: number, context: context);
-
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on FirebaseAuthException catch (error) {
       emit(state.copyWith(status: FormzStatus.submissionFailure, errorText: error.message));
@@ -71,6 +70,23 @@ class UserCubit extends Cubit<UserState> {
     map[fieldKey] = fieldValue;
     debugPrint("MAP DATA:${map}");
     emit(state.copyWith(fields: map));
+  }
+
+  Future<void> listenUsers() async {
+    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    _subscriptionAll = helperRepository.getUsers().listen(
+          (users) {
+        emit(
+          state.copyWith(
+            users: users,
+            status: FormzStatus.submissionSuccess,
+          ),
+        );
+      },
+      onError: (error) {
+        emit(state.copyWith(errorText: error.toString(), status: FormzStatus.submissionFailure));
+      },
+    );
   }
 
 }

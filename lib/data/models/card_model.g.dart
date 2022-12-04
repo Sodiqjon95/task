@@ -12,6 +12,7 @@ CardModel _$CardModelFromJson(Map<String, dynamic> json) => CardModel(
       cardNum: json['card_num'] as String? ?? '',
       cardSalary: (json['card_salary'] as num?)?.toDouble() ?? 0.0,
       holderName: json['holder_name'] as String? ?? '',
+      expiryData: json['expiry_data'] as String? ?? '',
     );
 
 Map<String, dynamic> _$CardModelToJson(CardModel instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$CardModelToJson(CardModel instance) => <String, dynamic>{
       'card_salary': instance.cardSalary,
       'holder_name': instance.holderName,
       'user_id': instance.userId,
+      'expiry_data': instance.expiryData,
     };

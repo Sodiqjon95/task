@@ -8,6 +8,7 @@ class MyIcons {
   static const String appLogo = 'assets/images/uzb.png';
   static const noInternet = "assets/lottie/no_internet.json";
   static const messageFailed = "assets/images/message_failed.png";
+  static const message = "assets/images/message.png";
 
 
 
@@ -26,7 +27,7 @@ class MyIcons {
 
   static const announcement = "assets/images/announcement.png";
   static const vacancies = "assets/images/vacancies.png";
-  static const inVacancies = "assets/images/in_vacancy.png";
+  static const inVacancies = "assets/images/img_7.png";
   static const profile = "assets/images/profile.png";
   static const String uzCard = 'assets/images/uzcard.png';
 
