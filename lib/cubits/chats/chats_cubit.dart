@@ -12,18 +12,18 @@ part 'chats_state.dart';
 class ChatsCubit extends Cubit<ChatsState> {
   ChatsCubit({required this.helperRepository})
       : super(ChatsState(
-          errorText: '',
-          status: FormzStatus.pure,
-          fields: {
-            "text": "",
-            "creat_at": "",
-            "chat_id": "",
-            "receiver_id": "",
-            "sender_id": "",
-          },
-          isAdded: false,
-          chats: [],
-        ));
+    errorText: '',
+    status: FormzStatus.pure,
+    fields: {
+      "text": "",
+      "creat_at": "",
+      "chat_id": "",
+      "receiver_id": "",
+      "sender_id": "",
+    },
+    isAdded: false,
+    chats: [],
+  ));
 
   final HelperRepository helperRepository;
   late StreamSubscription _subscriptionAll;
@@ -40,8 +40,7 @@ class ChatsCubit extends Cubit<ChatsState> {
     _subscriptionAll = helperRepository.getTwoUsersConversation().listen((chats) {
       chat.clear();
       for (int i = 0; i < chats.length; i++) {
-        if ((chats[i].senderId == receiverId || chats[i].receiverId == senderId)) {
-          chat.add(chats[i]);
+        if ((chats[i].senderId == receiverId && chats[i].receiverId == senderId) || (chats[i].senderId)==senderId && chats[i].receiverId == receiverId) {          chat.add(chats[i]);
         }else{
           print("elsga kirdi");
         }

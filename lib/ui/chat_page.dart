@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:lottie/lottie.dart';
 import 'package:task/cubits/chats/chats_cubit.dart';
 import 'package:task/ui/card/widgets/custom_app_bar.dart';
 import 'package:task/utils/color.dart';
-import 'package:task/utils/icons/icon.dart';
 import 'package:task/utils/style.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -24,11 +24,14 @@ class _ChatScreenState extends State<ChatScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   String userReceiver = '';
 
+
   final sodiqController = ScrollController();
   FocusNode focusNode = FocusNode();
   @override
   void initState() {
     userReceiver = widget.usersReceiver;
+    // sodiqController.jumpTo(
+    //     sodiqController.position.maxScrollExtent);
     super.initState();
   }
 
@@ -51,16 +54,15 @@ class _ChatScreenState extends State<ChatScreen> {
               ? Column(
                   children: [
                     Expanded(
-                      flex: 3,
+                      flex: 9,
                       child: ListView(
                           controller: sodiqController,
                           padding: const EdgeInsets.all(20),
                           physics: const BouncingScrollPhysics(),
                           children: List.generate(
                             chats.length,
-                            (index) {
+                                (index) {
                               isMyMessage = chats[index].receiverId == user!.uid.toString();
-
                               return Container(
                                 margin: EdgeInsets.only(
                                   right: isMyMessage ? 50 : 0,
@@ -83,12 +85,13 @@ class _ChatScreenState extends State<ChatScreen> {
                               );
                             },
                           )),
+
                     ),
-                    Expanded(child: SizedBox())
+                    Expanded(child: SizedBox(height: 20,))
 
                   ],
                 )
-              : Image.asset(MyIcons.inVacancies);
+              : Center(child: Lottie.asset('assets/lottie/no_data.json'));
         }
         return const Center(child: Text("error"));
       }),
@@ -123,20 +126,21 @@ class _ChatScreenState extends State<ChatScreen> {
                     chat.updateChat(fieldValue: userReceiver, fieldKey: 'receiver_id');
                     chat.updateChat(fieldValue: user!.uid, fieldKey: 'sender_id');
                     chat.addChat();
-
+                    chat.getTwoUsersConversation(senderId: userReceiver, receiverId: user!.uid);
 
                   }
                   // onTap.call();
                   messagingController.clear();
                   //
-                  // Future.delayed(Duration(milliseconds: 100),(){  setState(() {
-                  //   sodiqController.jumpTo(
-                  //       sodiqController.position.maxScrollExtent);
-                  // });});
+                  Future.delayed(Duration(milliseconds: 100),(){  setState(() {
+                    sodiqController.jumpTo(
+                        sodiqController.position.maxScrollExtent);
+                  });});
                 },
 
               )),
           onChanged: (v) {
+            // context.read<ChatsCubit>().getTwoUsersConversation(senderId: userReceiver, receiverId: user!.uid);
             sodiqController.jumpTo(
                 sodiqController.position.maxScrollExtent);
           },
@@ -148,45 +152,4 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 /*
-TextFormField(
-                      style: const TextStyle(color: Colors.black),
-                      controller: messagingController,
-                      cursorColor: Colors.black,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          hoverColor: MyColors.white,
-                          fillColor: MyColors.white,
-                          filled: true,
-                          hintText: "Write a message ...",
-                          hintStyle: TextStyle(color: MyColors.black.withOpacity(0.5)),
-                          suffixIcon: IconButton(
-                            icon: const Icon(
-                              Icons.send,
-                              color: Colors.blue,
-                              size: 28.0,
-                            ),
-                            onPressed: () async {
-                              var chat = BlocProvider.of<ChatsCubit>(context);
-                              final now = DateTime.now();
-                              if (messagingController.text.isNotEmpty) {
-
-                                chat.updateChat(fieldValue: messagingController.text, fieldKey: 'text');
-                                chat.updateChat(fieldValue: now.toString(), fieldKey: 'creat_at');
-                                chat.updateChat(fieldValue: userReceiver, fieldKey: 'receiver_id');
-                                chat.updateChat(fieldValue: user!.uid, fieldKey: 'sender_id');
-                                chat.addChat();
-                              }
-                              // onTap.call();
-                              messagingController.clear();
-                            },
-
-                          )),
-                      onChanged: (v) {
-                        sodiqController.jumpTo(
-                            sodiqController.position.maxScrollExtent);
-                      },
-
-                    ),
  */

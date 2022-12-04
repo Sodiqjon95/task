@@ -15,6 +15,7 @@ class ChatsState extends Equatable {
   final String errorText;
   final bool isAdded;
 
+
   ChatsState copyWith({
     FormzStatus? status,
     List<ChatsModel>? chats,
