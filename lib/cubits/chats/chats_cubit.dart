@@ -33,8 +33,6 @@ class ChatsCubit extends Cubit<ChatsState> {
     required String senderId,
     required String receiverId,
   }) async {
-    //chat yuqmi
-    //bor ishlatingchi
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
 
     _subscriptionAll = helperRepository.getTwoUsersConversation().listen((chats) {
